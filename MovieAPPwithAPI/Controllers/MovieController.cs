@@ -46,7 +46,17 @@ namespace MovieAPPwithAPI.Controllers
 
         }
 
+        [HttpPost]
+        public ActionResult<Movie> Post(Movie movie)
+        {
+            if (movie != null)
+            {
+                Movies.Add(movie);
+                return Ok("Movie added");
+            }
 
+            return BadRequest("Could not add movie, check inputs and try again!");
+        }
 
 
 
