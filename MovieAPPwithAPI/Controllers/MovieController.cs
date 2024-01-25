@@ -58,7 +58,42 @@ namespace MovieAPPwithAPI.Controllers
             return BadRequest("Could not add movie, check inputs and try again!");
         }
 
+        [HttpPut]
+        [Route("{id}")]
+        [Consumes("application/json")]
+        public ActionResult Put(int id, Movie updatedMovie)
+        {
+            var existingMovie = Movies.FirstOrDefault(m => m.Id == id);
 
+            if (existingMovie == null)
+            {
+                return NotFound("Cant find movie");
+            }
+
+            existingMovie.Title = updatedMovie.Title;
+            existingMovie.ProductionYear = updatedMovie.ProductionYear;
+            existingMovie.Synopsis = updatedMovie.Synopsis;
+            existingMovie.BoxOffice = updatedMovie.BoxOffice;
+            existingMovie.Id = id;
+            existingMovie.Genre = updatedMovie.Genre;
+
+            return Ok("Movie updated");
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public ActionResult Delete(int id)
+        {
+            var movieToDelete = Movies.FirstOrDefault(m => m.Id == id);
+            if (movieToDelete == null)
+            {
+                return NotFound();
+            }
+
+            Movies.Remove(movieToDelete);
+
+            return Ok("Movie deleted");
+        }
 
     };
 
